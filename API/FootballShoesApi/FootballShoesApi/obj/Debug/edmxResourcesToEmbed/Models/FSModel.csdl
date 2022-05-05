@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="FSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="BillDetail">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="billId" Type="Int32" />
+    <Property Name="productId" Type="Int32" />
+    <Property Name="quantity" Type="Int32" />
+    <Property Name="price" Type="Int64" />
+    <NavigationProperty Name="Bill" Relationship="Self.FK__BillDetai__billI__2A4B4B5E" FromRole="BillDetails" ToRole="Bills" />
+    <NavigationProperty Name="Product" Relationship="Self.FK__BillDetai__produ__2B3F6F97" FromRole="BillDetails" ToRole="Products" />
+  </EntityType>
+  <EntityType Name="Bill">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="recipientName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="recipientAddress" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="recipientPhone" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="status" Type="Int32" />
+    <Property Name="createdAt" Type="DateTime" Precision="0" />
+    <Property Name="note" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="BillDetails" Relationship="Self.FK__BillDetai__billI__2A4B4B5E" FromRole="Bills" ToRole="BillDetails" />
+    <Property Name="totalPrice" Type="Int64" />
+  </EntityType>
+  <EntityType Name="CartDetail">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="productId" Type="Int32" />
+    <Property Name="price" Type="Int64" />
+    <NavigationProperty Name="Product" Relationship="Self.FK__CartDetai__produ__2C3393D0" FromRole="CartDetails" ToRole="Products" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="size" Type="Int32" />
+    <Property Name="price" Type="Int64" />
+    <Property Name="image" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="discount" Type="Int32" />
+    <Property Name="description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="information" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="BillDetails" Relationship="Self.FK__BillDetai__produ__2B3F6F97" FromRole="Products" ToRole="BillDetails" />
+    <NavigationProperty Name="CartDetails" Relationship="Self.FK__CartDetai__produ__2C3393D0" FromRole="Products" ToRole="CartDetails" />
+    <Property Name="slug" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <Association Name="FK__BillDetai__billI__2A4B4B5E">
+    <End Role="Bills" Type="Self.Bill" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="BillDetails" Type="Self.BillDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Bills">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="BillDetails">
+        <PropertyRef Name="billId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__BillDetai__produ__2B3F6F97">
+    <End Role="Products" Type="Self.Product" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="BillDetails" Type="Self.BillDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="BillDetails">
+        <PropertyRef Name="productId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__CartDetai__produ__2C3393D0">
+    <End Role="Products" Type="Self.Product" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="CartDetails" Type="Self.CartDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="CartDetails">
+        <PropertyRef Name="productId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="FSEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="BillDetails" EntityType="Self.BillDetail" />
+    <EntitySet Name="Bills" EntityType="Self.Bill" />
+    <EntitySet Name="CartDetails" EntityType="Self.CartDetail" />
+    <EntitySet Name="Products" EntityType="Self.Product" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <AssociationSet Name="FK__BillDetai__billI__2A4B4B5E" Association="Self.FK__BillDetai__billI__2A4B4B5E">
+      <End Role="Bills" EntitySet="Bills" />
+      <End Role="BillDetails" EntitySet="BillDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK__BillDetai__produ__2B3F6F97" Association="Self.FK__BillDetai__produ__2B3F6F97">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="BillDetails" EntitySet="BillDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CartDetai__produ__2C3393D0" Association="Self.FK__CartDetai__produ__2C3393D0">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="CartDetails" EntitySet="CartDetails" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

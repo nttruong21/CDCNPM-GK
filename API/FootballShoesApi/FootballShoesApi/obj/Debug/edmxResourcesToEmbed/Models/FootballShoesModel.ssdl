@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CDCNPM_MIDTERMModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="BillDetails">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="billId" Type="int" />
+    <Property Name="productId" Type="int" />
+    <Property Name="quantity" Type="int" />
+    <Property Name="price" Type="bigint" />
+  </EntityType>
+  <EntityType Name="Bills">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="recipientName" Type="nvarchar" MaxLength="255" />
+    <Property Name="recipientAddress" Type="nvarchar" MaxLength="255" />
+    <Property Name="recipientPhone" Type="nvarchar" MaxLength="255" />
+    <Property Name="status" Type="int" />
+    <Property Name="createdAt" Type="date" />
+    <Property Name="note" Type="nvarchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="CartDetails">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="productId" Type="int" />
+    <Property Name="quantity" Type="int" />
+    <Property Name="price" Type="bigint" />
+  </EntityType>
+  <EntityType Name="Products">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="255" />
+    <Property Name="size" Type="int" />
+    <Property Name="price" Type="bigint" />
+    <Property Name="image" Type="nvarchar" MaxLength="255" />
+    <Property Name="discount" Type="int" />
+    <Property Name="information" Type="nvarchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <Association Name="FK__BillDetai__billI__3C69FB99">
+    <End Role="Bills" Type="Self.Bills" Multiplicity="0..1" />
+    <End Role="BillDetails" Type="Self.BillDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Bills">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="BillDetails">
+        <PropertyRef Name="billId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__BillDetai__produ__3D5E1FD2">
+    <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
+    <End Role="BillDetails" Type="Self.BillDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="BillDetails">
+        <PropertyRef Name="productId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__CartDetai__produ__3E52440B">
+    <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
+    <End Role="CartDetails" Type="Self.CartDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="CartDetails">
+        <PropertyRef Name="productId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="CDCNPM_MIDTERMModelStoreContainer">
+    <EntitySet Name="BillDetails" EntityType="Self.BillDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Bills" EntityType="Self.Bills" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CartDetails" EntityType="Self.CartDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__BillDetai__billI__3C69FB99" Association="Self.FK__BillDetai__billI__3C69FB99">
+      <End Role="Bills" EntitySet="Bills" />
+      <End Role="BillDetails" EntitySet="BillDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK__BillDetai__produ__3D5E1FD2" Association="Self.FK__BillDetai__produ__3D5E1FD2">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="BillDetails" EntitySet="BillDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CartDetai__produ__3E52440B" Association="Self.FK__CartDetai__produ__3E52440B">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="CartDetails" EntitySet="CartDetails" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
