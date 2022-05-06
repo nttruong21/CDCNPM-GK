@@ -1,3 +1,12 @@
+Đề tài: Tìm hiểu Web API và demo
+Thành viên:
+- NGUYỄN THẾ TRƯỜNG – 51900780
+- ĐẬU ĐĂNG SƠN – 51900427
+- LÊ HOÀNG NHÂN – 51900768
+
+Video demo: https://www.youtube.com/watch?v=vxspB_mku0g&t=115s
+Github: https://github.com/nttruong21/CDCNPM-GK.git
+
 Hướng dẫn chạy project:
 Yêu cầu: 
 - Đã cài nodeJS
